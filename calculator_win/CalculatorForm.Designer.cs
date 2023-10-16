@@ -103,7 +103,7 @@
             this.btn_clear_current.Name = "btn_clear_current";
             this.btn_clear_current.Size = new System.Drawing.Size(56, 50);
             this.btn_clear_current.TabIndex = 4;
-            this.btn_clear_current.Text = "CE";
+            this.btn_clear_current.Text = "Del";
             this.btn_clear_current.UseVisualStyleBackColor = true;
             this.btn_clear_current.Click += new System.EventHandler(this.btn_clear_current_Click);
             // 

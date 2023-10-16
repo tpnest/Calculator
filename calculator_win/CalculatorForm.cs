@@ -8,18 +8,22 @@ namespace calculator_win
         /// <summary>
         /// 计算结果
         /// </summary>
-        private double _resultValue = 0;
+        private double _result = 0;
 
         /// <summary>
-        /// 操作按钮 + - * /
+        /// 操作符 + - * /
         /// </summary>
-        private string _operatorPerformed = " ";
+        private string _operator = string.Empty;
 
         /// <summary>
         /// 是否在textBlock中显示下一个数字输入
         /// </summary>
-        private bool _performedOp = false;
-        
+        private bool _isShowNextNum = false;
+
+        /// <summary>
+        /// 最后一个操作符是否是'='
+        /// </summary>
+        private bool _isEqualBtnClicked = false;
         public CalculatorForm()
         {
             InitializeComponent();
@@ -33,10 +37,10 @@ namespace calculator_win
         /// <param name="e"></param>
         private void btn_NumAndDot_Click(object sender, EventArgs e)
         {
-            if (textBox_Result.Text == "0" || _performedOp)
+            if (textBox_Result.Text == "0" || _isShowNextNum)
                 textBox_Result.Clear();
 
-            _performedOp = false;
+            _isShowNextNum = false;
             var button = (Button)sender;
             if (button.Text == ".")
             {
@@ -59,23 +63,25 @@ namespace calculator_win
         {
             var button = (Button)sender;
             
-            if (_resultValue != 0)
+            if (_result != 0)
             {
-                // 如果没有点击“=”继续输入先计算上一个表达式的结果
-                if(!_performedOp)
+                // 如果 没有点击“=”并且最后一个操作符不是等于 继续输入先计算上一个表达式的结果
+                if(!_isShowNextNum && !_isEqualBtnClicked)
                 {
-                    btn_equal.PerformClick();
+                    CalculationResults();
                 }
-                _operatorPerformed = button.Text;
-                label_Show_Op.Text = _resultValue + " " + _operatorPerformed;
-                _performedOp = true;
+                _operator = button.Text;
+                label_Show_Op.Text = _result + "" + _operator;
+                _isShowNextNum = true;
+                _isEqualBtnClicked = false;
             }
             else
             {
-                _operatorPerformed = button.Text;
-                _resultValue = double.Parse(textBox_Result.Text);
-                label_Show_Op.Text = _resultValue + " " + _operatorPerformed;
-                _performedOp = true;
+                _operator = button.Text;
+                _result = double.Parse(textBox_Result.Text);
+                label_Show_Op.Text = _result + "" + _operator;
+                _isShowNextNum = true;
+                _isEqualBtnClicked = false;
             }
         }
 
@@ -86,7 +92,13 @@ namespace calculator_win
         /// <param name="e"></param>
         private void btn_clear_current_Click(object sender, EventArgs e)
         {
-            textBox_Result.Text = "0";
+            if (textBox_Result.Text.Length == 1)
+            {
+                textBox_Result.Text = "0";
+                return;
+            }
+
+            textBox_Result.Text = textBox_Result.Text.Substring(0,textBox_Result.Text.Length -1);
         }
 
         /// <summary>
@@ -97,8 +109,8 @@ namespace calculator_win
         private void btn_clear_Click(object sender, EventArgs e)
         {
             textBox_Result.Text = "0";
-            _resultValue = 0;
-            label_Show_Op.Text = " ";
+            _result = 0;
+            label_Show_Op.Text = string.Empty;
         }
 
         /// <summary>
@@ -108,30 +120,37 @@ namespace calculator_win
         /// <param name="e"></param>
         private void btn_equal_Click(object sender, EventArgs e)
         {
-            switch (_operatorPerformed)
+            CalculationResults();
+            _isEqualBtnClicked = true;
+        }
+
+
+        private void CalculationResults()
+        {
+            switch (_operator)
             {
                 case "+":
-                    textBox_Result.Text = (_resultValue + double.Parse(textBox_Result.Text)).ToString();
+                    textBox_Result.Text = (_result + double.Parse(textBox_Result.Text)).ToString();
                     break;
 
                 case "-":
-                    textBox_Result.Text = (_resultValue - double.Parse(textBox_Result.Text)).ToString();
+                    textBox_Result.Text = (_result - double.Parse(textBox_Result.Text)).ToString();
                     break;
 
                 case "×":
-                    textBox_Result.Text = (_resultValue * double.Parse(textBox_Result.Text)).ToString();
+                    textBox_Result.Text = (_result * double.Parse(textBox_Result.Text)).ToString();
                     break;
 
                 case "÷":
-                    textBox_Result.Text = (_resultValue / double.Parse(textBox_Result.Text)).ToString();
+                    textBox_Result.Text = (_result / double.Parse(textBox_Result.Text)).ToString();
                     break;
 
                 default:
-                    throw new ArgumentException($"未实现的操作符:{_operatorPerformed}");
+                    throw new ArgumentException($"未实现的操作符:{_operator}");
             }
 
-            _resultValue = double.Parse(textBox_Result.Text);
-            label_Show_Op.Text = " ";
+            _result = double.Parse(textBox_Result.Text);
+            label_Show_Op.Text = string.Empty;
         }
     }
 }
