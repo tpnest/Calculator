@@ -19,7 +19,7 @@ namespace calculator_win
         /// 是否在textBlock中显示下一个数字输入
         /// </summary>
         private bool _performedOp = false;
-
+        
         public CalculatorForm()
         {
             InitializeComponent();

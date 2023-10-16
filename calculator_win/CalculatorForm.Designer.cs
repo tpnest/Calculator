@@ -48,6 +48,8 @@
             this.btn_dot = new System.Windows.Forms.Button();
             this.textBox_Result = new System.Windows.Forms.TextBox();
             this.label_Show_Op = new System.Windows.Forms.Label();
+            this.btn_lt = new System.Windows.Forms.Button();
+            this.btn_gt = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_seven
@@ -269,11 +271,33 @@
             this.label_Show_Op.Size = new System.Drawing.Size(0, 15);
             this.label_Show_Op.TabIndex = 21;
             // 
+            // btn_lt
+            // 
+            this.btn_lt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_lt.Location = new System.Drawing.Point(13, 102);
+            this.btn_lt.Name = "btn_lt";
+            this.btn_lt.Size = new System.Drawing.Size(56, 50);
+            this.btn_lt.TabIndex = 22;
+            this.btn_lt.Text = "(";
+            this.btn_lt.UseVisualStyleBackColor = true;
+            // 
+            // btn_gt
+            // 
+            this.btn_gt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_gt.Location = new System.Drawing.Point(75, 102);
+            this.btn_gt.Name = "btn_gt";
+            this.btn_gt.Size = new System.Drawing.Size(56, 50);
+            this.btn_gt.TabIndex = 23;
+            this.btn_gt.Text = ")";
+            this.btn_gt.UseVisualStyleBackColor = true;
+            // 
             // CalculatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(271, 399);
+            this.Controls.Add(this.btn_gt);
+            this.Controls.Add(this.btn_lt);
             this.Controls.Add(this.label_Show_Op);
             this.Controls.Add(this.textBox_Result);
             this.Controls.Add(this.btn_equal);
@@ -304,7 +328,9 @@
             this.PerformLayout();
         }
 
- 
+        private System.Windows.Forms.Button btn_lt;
+        private System.Windows.Forms.Button btn_gt;
+
 
         private System.Windows.Forms.Button btn_seven;
         private System.Windows.Forms.Button btn_eight;
